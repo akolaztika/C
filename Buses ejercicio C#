@@ -1,0 +1,293 @@
+using System;
+
+/*Una empresa de buses tiene 3 sucursales. Cada sucursal cuenta con 5 buses y cada bus con 40 asientos.
+En los asientos se guarda 0 si está disponible y un 1 si está ocupado. Genere un código en C# que permita indicar
+los asientos ocupados de los distintos buses de las distintas sucursales. 
+Al final del proceso, debe entregar por sucursal el total de asientos disponibles. */
+
+/* Nuevo Requerimiento: En lugar de bool, utilizar Rut, Nombre, Apellidos, Sexo, Edad, Origen y Destino */
+
+public struct Pasajero {
+	public int rut;
+	public string nombre;
+	public string apellidos;
+	public int sexo;
+	public int edad;
+	public string origen;
+	public string destino;
+}
+
+class VentaPasajes {
+
+	public Pasajero[,,] matrix;
+
+	public static void Main() {
+		VentaPasajes inst = new VentaPasajes();	
+		inst.matrix = new Pasajero[3,5,40];
+		inst.Menu();
+	}
+
+	public void Menu() {
+		try {
+			bool continuar = true;
+			while(continuar){
+				Console.WriteLine("\n## Choca Burros");
+				Console.WriteLine("1. Ocupar Asiento");
+				Console.WriteLine("2. Desocupar Asiento");
+				Console.WriteLine("3. Ver Status General");
+				Console.WriteLine("4. Ver Status por Sucursal");
+				Console.WriteLine("5. Ver Status por Sucursal y Bus");
+				Console.Write("~ Ingrese Opción: ");
+
+				/* Obtener Opción */
+				int opcion = Convert.ToInt32(Console.ReadLine());
+
+				switch (opcion) {
+					case 1: this.OcuparAsiento();
+					break;
+
+					case 2: this.DesocuparAsiento();
+					break;
+
+					case 3: this.EstadoSucursales();
+					break;
+
+					case 4: this.EstadoSucursal();
+					break;
+
+					case 5: this.EstadoBus();
+					break;
+
+					default: continuar = false;
+					break;
+				}
+				Console.WriteLine("\n################");
+			}
+		} catch(Exception e) {
+			Console.WriteLine("Opción no Válida!");
+		}
+	}
+
+	private int[] SeleccionarAsiento() {
+		int[] asiento = new int[3];
+
+		Console.WriteLine("\n~ Ocupar Asiento");
+		Console.Write("Ingrese Sucursal: ");
+		asiento[0] = Convert.ToInt32(Console.ReadLine()) - 1;
+		if(asiento[0] > this.matrix.GetLength(0) || asiento[0] < 0) {
+			throw new Exception("Sucursal fuera de Rango");
+		} 
+
+		Console.Write("Ingrese Bus: ");
+		asiento[1] = Convert.ToInt32(Console.ReadLine()) - 1;
+		if(asiento[1] > this.matrix.GetLength(1) || asiento[1] < 0) {
+			throw new Exception("Nº Bus fuera de Rango");
+		} 
+
+		Console.Write("Ingrese Asiento: ");
+		asiento[2] = Convert.ToInt32(Console.ReadLine()) - 1;
+		if(asiento[2] > this.matrix.GetLength(2) || asiento[2] < 0) {
+			throw new Exception("Nº Asiento fuera de Rango");
+		} 
+		return asiento;
+	}
+
+	private int ValidarRut(string rut) {
+		bool valido = false;
+		int cuerpo = 0;
+		while(!valido) {
+			rut = rut.Replace("-", "");
+			rut = rut.Replace(".", "");
+
+			cuerpo = Convert.ToInt32(rut.Substring(0, rut.Length - 1));
+			string dv = rut.Substring(rut.Length - 1, 1).ToUpper();
+			string realDV = this.obtenerDV(cuerpo);
+
+			valido = dv.Equals(realDV);
+			if(!valido) {
+				Console.Write("RUT Inválido! Ingrese nuevamente: ");
+				rut = Console.ReadLine();
+			}
+		}
+		return cuerpo;
+	}
+
+	private string obtenerDV(int rut) {
+		try {
+			string dv = null;
+			int suma = 0; int multiplo = 2;
+
+			for(int i=1; i <= rut.ToString().Length; i++) {
+				int segmento = Convert.ToInt32(rut.ToString().Substring(rut.ToString().Length - i, 1));
+				int index = multiplo * segmento;
+				suma = suma + index;
+				if(multiplo < 7) { multiplo = multiplo + 1; } else { multiplo = 2; }
+			}
+			int dvEsperado = 11 - (suma % 11);
+			dv = dvEsperado.ToString();
+			dv = (dv.Equals("11"))?"0":dv;
+			dv = (dv.Equals("10"))?"K":dv;
+			return dv;
+		} catch(Exception e) {
+			return "-1";
+		}
+	}
+
+	private int ValidarEdad(string edad) {
+		bool valido = false;
+		int edadFormateada = 0;
+		while(valido) {
+			try {
+				edadFormateada =  Convert.ToInt32(edad);
+				if(edadFormateada < 0) {
+					throw new Exception("Edad Inválida");
+				}
+			} catch(Exception e) {
+				Console.Write("Edad Inválida! Ingrese nuevamente: ");
+				edad = Console.ReadLine();
+			}
+		}
+		return edadFormateada;
+	}
+
+	private int ValidarSexo(string sexo) {
+		bool valido = false;
+		int sexoFormateado = 0;
+		while (!valido) {
+			switch(sexo) {
+				case "M":
+				case "Mujer":
+				case "Femenino":
+				sexoFormateado = 1;
+				valido = true;
+				break;
+
+				case "H":
+				case "Hombre":
+				case "Masculino":
+				sexoFormateado = 2;
+				valido = true;
+				break;
+			}
+			if(!valido) {
+				Console.Write("Sexo Inválido! Ingrese nuevamente: ");
+				sexo = Console.ReadLine();
+			}
+		}
+		return sexoFormateado;
+	}
+
+	private Pasajero LlenarDatos() {
+
+		Pasajero pasajero = new Pasajero();
+		Console.Write("\n~ Ingrese RUT: ");
+		pasajero.rut = this.ValidarRut(Console.ReadLine());
+
+		Console.Write("~ Ingrese Nombre: ");
+		pasajero.nombre = Console.ReadLine();
+
+		Console.Write("~ Ingrese Apellidos: ");
+		pasajero.apellidos = Console.ReadLine();
+
+		Console.Write("~ Ingrese Sexo: ");
+		pasajero.sexo = this.ValidarSexo(Console.ReadLine());
+
+		Console.Write("~ Ingrese Edad: ");
+		pasajero.edad = this.ValidarEdad(Console.ReadLine());
+
+		Console.Write("~ Ingrese Origen: ");
+		pasajero.origen = Console.ReadLine();
+
+		Console.Write("~ Ingrese Destino: ");
+		pasajero.destino = Console.ReadLine();
+
+		return pasajero;
+	}
+
+	private bool CheckVacio(Pasajero pasajero) {
+		bool chequeoPt1 = (pasajero.rut.Equals(0) & String.IsNullOrEmpty(pasajero.nombre));
+		bool chequeoPt2 = (String.IsNullOrEmpty(pasajero.apellidos) & pasajero.sexo.Equals(0));
+		bool chequeoPt3 = (pasajero.edad.Equals(0) & String.IsNullOrEmpty(pasajero.origen));
+		bool chequeoPt4 = (String.IsNullOrEmpty(pasajero.destino));
+		return (chequeoPt1 && chequeoPt2 && chequeoPt3 && chequeoPt4);
+	}
+
+	public void OcuparAsiento() {
+		int[] matrix = this.SeleccionarAsiento();
+
+		Pasajero pasajeroActual = this.matrix[matrix[0], matrix[1], matrix[2]];
+		if(!this.CheckVacio(pasajeroActual)) {
+			Console.Write("~ Este asiento está ocupado. Deseas Sobrescribirlo?: ");
+			string opcion = Console.ReadLine();
+			Console.WriteLine(opcion);
+		} else {
+			this.matrix[matrix[0], matrix[1], matrix[2]] = this.LlenarDatos();	
+		}	
+	}	
+
+	public void DesocuparAsiento() {
+		int[] matrix = this.SeleccionarAsiento();
+		this.matrix[matrix[0], matrix[1], matrix[2]] = new Pasajero();
+	}
+
+	public void EstadoSucursales() {
+		for(int i = 0; i < this.matrix.GetLength(0); i++) {
+			Console.WriteLine("\n # Sucursal " + (i + 1).ToString());
+
+			for(int j = 0; j < this.matrix.GetLength(1); j++) {
+				Console.WriteLine("\n # Bus " + (j + 1).ToString());
+
+				for(int k = 0; k < this.matrix.GetLength(2); k++) {
+					this.EstadoAsiento(this.matrix[i,j,k], k);
+				}
+			}
+		}
+	}
+
+	public void EstadoSucursal() {
+		Console.Write("Ingrese Sucursal: ");
+		int sucursal = Convert.ToInt32(Console.ReadLine()) - 1;
+		if(sucursal > this.matrix.GetLength(0) || sucursal < 0) {
+			throw new Exception("Sucursal fuera de Rango");
+		} 
+
+		for(int i = 0; i < this.matrix.GetLength(1); i++) {
+			Console.WriteLine("\n # Bus " + (i + 1).ToString());
+			for(int j = 0; j < this.matrix.GetLength(2); j++) {
+				this.EstadoAsiento(this.matrix[sucursal,i,j], j);
+			}
+		}
+	}
+
+	public void EstadoBus() {
+		Console.Write("Ingrese Sucursal: ");
+		int sucursal = Convert.ToInt32(Console.ReadLine()) - 1;
+		if(sucursal > this.matrix.GetLength(0) || sucursal < 0) {
+			throw new Exception("Sucursal fuera de Rango");
+		} 
+
+		Console.Write("Ingrese Bus: ");
+		int bus = Convert.ToInt32(Console.ReadLine()) - 1;
+		if(bus > this.matrix.GetLength(0) || bus < 0) {
+			throw new Exception("Bus fuera de Rango");
+		} 
+
+		for(int j = 0; j < this.matrix.GetLength(2); j++) {
+			this.EstadoAsiento(this.matrix[sucursal,bus,j], j);
+		}
+	}
+
+	private void EstadoAsiento(Pasajero pasajero, int asiento) {
+		if(this.CheckVacio(pasajero)) {
+			Console.WriteLine("Asiento {0}: Vacío", asiento + 1);
+		} else {
+			Console.WriteLine("Asiento {0}: {1} {2}", asiento + 1, pasajero.nombre, pasajero.apellidos);
+			Console.WriteLine("~ RUT: {0}-{1}", pasajero.rut, this.obtenerDV(pasajero.rut));
+			Console.WriteLine("~ Sexo: {0}", (pasajero.sexo.Equals(1)?"Mujer":"Hombre"));
+			Console.WriteLine("~ Edad: {0}", pasajero.edad);
+			Console.WriteLine("~ Origen: {0}", pasajero.origen);
+			Console.WriteLine("~ Destino: {0}\n", pasajero.destino);
+
+		}
+	}
+}
