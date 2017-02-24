@@ -170,3 +170,23 @@
 		
 		<h1><span class="glyphicon glyphicon-asterisk"></span> titulo de prueba h1</h1>
 	-->
+<!--------  DROPDOWN              -------->
+	<!--
+		li*4>a[href="#"]{item #$} 
+			<li><a href="#">item #1</a></li>
+			<li><a href="#">item #2</a></li>
+			<li><a href="#">item #3</a></li>
+			<li><a href="#">item #4</a></li>
+
+		// boton con menu 
+		<button class="btn brn-default dropdown-toggle" type="button" id="dropmenu1" data-toggle="dropdown" aria-extended="true">
+
+		.caret     				// icono  de una sola palabra flecha hacia abajo
+		role="presentacion"     // es para otorgar un rol 
+ 		.dropdown-header 		// titulo de menu 
+		.divider 				// es una linea que divide un sector u otro 
+		
+		ej: 
+			<li role="presentation" class="dropdown-header" >header</li>
+			<li class="divider"></li>
+	-->
