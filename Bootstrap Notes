@@ -1,0 +1,162 @@
+
+<!--------  GRIDS // 12 COLUMNAS  -------->
+	
+	<div class="container"></div>
+	<!-- 
+		sirve para encerrar todo lo que se hara en el 
+		body esto centra un rectangulo dando mejores 
+		bordes 
+	-->
+
+	<!-- EXISTEN 4 TIPOS DE COLUMNAS -->
+	<div class="col-xs-4"></div>
+	<!--
+		COL // columna
+		XS //  extra small	 //smatrphones
+		SM // extra small  	 //tablets
+		MD // medium formato // horizontal
+		LG // large desktop  // ordenador 
+		4 // el numero de columnas hacia el lado a 
+			utilizar
+	-->
+<!--------  COMANDO EMMET 		  -------->
+	<!--
+		 .col-md-3*4 
+		 <div class="col-md-3"></div>
+		 <div class="col-md-3"></div>
+		 <div class="col-md-3"></div>
+		 <div class="col-md-3"></div> 
+
+		 /// CLASES UTILIZADAS  ////
+			.clearfix // limpia errores (de tamaño) que tienen sitios web x defecto  
+
+	-->	
+<!--------  TIPOGRAFIA Y TEXTO    -------->
+
+	<small> texto secundario </small>
+	<!--
+		el texto segundario quedara en plomo claro
+	-->
+
+	<!--
+		.lead 			//  resaltar texto
+		<mark>			//	destacar texto
+		<del>			//	tachar texto 
+		<s>				//	tachar texto
+		<ins>			//	subrayar que se ingreso depsues 
+		<u>				//	 ||
+		<smal> 	 		//	letra pequeña
+		<strong>		//	negrita
+		<b>				// 	negrita
+		<em>			//	fuente italica
+		.text-left 		//	alineados de parrafo	 
+		.text-center 	//	alineados de parrafo
+		.text-right 	//	alineados de parrafo
+		.text-justify 	//	alineados de parrafo
+		.text-lowercase //	convierte todo en minuscula
+		.text-uppercase //	convierte todo en mayuscula
+		.text-capitalize//	primer letra de cada palabra en mayuscula
+		<bloquote>		//  citas
+		<city title>	//	fuente .... bilbiografía
+		<code>			//	para que aparezca codigo como parrafo
+		<pre>			// 	bloque de codigo 
+		.text-muted 	//	colores
+		.text-primary 	//	colores
+		.text-success 	//	colores
+		.text-info 		//	colores
+		.text-warning 	//	colores
+		.text-danger 	//	colores
+		.bg-primary 	//	coloeres de fondo
+		.bg-succes 		//	coloeres de fondo
+		.bg-info 		//	coloeres de fondo
+		.bg-warning 	//	coloeres de fondo
+		.bg-danger 		//	coloeres de fondo
+
+
+	-->
+<!--------  TABLAS                -------->
+	<!-- 
+		<th>				// para los titulos de la tabla mejor negrita 
+		.table-striped 		// alterna los colores intemediamente 
+							   no todos los navegadores lo soportan
+
+		.table-bordered 	// bordes de la tabla 
+		.table-hover 		// al pasar el mouse cambio de color
+		.table-condensed 	// hace mas pequeñas (comprimen)
+		.active 			// una fila se selecciona con color desde el inicio 
+							   dentro de un <tr class="active"></tr>
+	-->
+<!--------  FORMULARIOS           -------->
+
+	<!--
+		.form-control 		// para todos los controles 
+							   input | select | texarea 
+
+		text				
+		password
+		datetime
+		datetime-local
+		date
+		month				|| CONTROLES SOPORTADOS POR .form-control  
+		time
+		week
+		number
+		email
+		url
+		search
+		tel
+		color
+
+		.form-group 		// encerrar contenido para dar espacio entre los grupos
+		.help-block 		// dejar un texto en color gris (aviso)
+		.form-inline 		// se posicionan uno al lado del otro 
+		.sr.only 			// screen reader esconde los label 
+		.checkbox 			// sirve tanto para divs y input type 
+		.input-group-addon  // sirver para que cree un cuadro con icono @
+		.colmd.offset 		// sirve para desplazar a la derecha un .form-group
+		.form-horizontal 	// para que el formulario quede hacia bajo 
+		
+	-->
+<!--------  BOTONES               -------->
+	
+	<!--
+		 //// TIPOS DE BOTONES //////
+
+		<<button></button>
+		<a href=""></a>
+		<input type="buttton">
+		
+		///// 	CLASES PARA BUTTON ////
+
+		.btn 				// boton simple
+		.btn btn-xs			// tamaño de button
+		.btn btn-sm			// tamaño de button
+		.btn btn-lg 		// tamaño de button
+		.btn btn-default 	// boton por defecto gris
+		.btn btn-primary 	// button azul
+		.btn btn-success 	// buttonverde
+		.btn btn-info 		// button celeste
+		.btn btn-warning 	// button naranjo
+		.btn btn-danger 	// button rojo
+		.btn btn-link 		// buttom link
+		.btn-block          // ocupa todas las columnas asignadas
+
+		/// EJEMPLO ///
+
+		<button class="btn btn-xs btn-block btn-default" active></button>	
+		
+	-->
+<!--------  IMAGENES              -------->
+	<!--
+		.img-responsive // la imagen queda al 100%
+		.img-rounded 	// imagen con bordes redondeados
+		.img-circle 	// imagen circular
+
+		/// EJEMPLO ///
+
+		<img src="http://lorempixel.com/500/500" alt="" class="img-responsive img-rounded">	
+	-->
+<!--------  HELPER CLASES 		  -------->
+	<!--
+		
+	-->
